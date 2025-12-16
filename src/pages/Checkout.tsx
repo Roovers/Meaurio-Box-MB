@@ -11,7 +11,7 @@ import { MessageCircle, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Checkout = () => {
-  const { items, total, clearCart } = useCart();
+  const { items, total} = useCart();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
