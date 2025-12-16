@@ -9,7 +9,7 @@ import NotFound from '@/pages/NotFound';
 
 function App() {
   return (
-    <BrowserRouter basename="/Meaurio-Box-MB">
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
