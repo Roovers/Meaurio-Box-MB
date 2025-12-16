@@ -5,11 +5,11 @@ import Home from '@/pages/Home';
 import Products from '@/pages/Products';
 import About from '@/pages/About';
 import Checkout from '@/pages/Checkout';
-import NotFound from '@/pages/NotFound'
+import NotFound from '@/pages/NotFound';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/Meaurio-Box-MB">
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />

@@ -5,10 +5,7 @@ import path from "path"
 
 export default defineConfig({
   base: "/Meaurio-Box-MB/",
-  plugins: [
-    react(),
-    tailwindcss(),
-  ],
+  plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
