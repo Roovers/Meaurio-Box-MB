@@ -11,7 +11,7 @@ import { MessageCircle, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Checkout = () => {
-  const { items, total} = useCart();
+  const { items, total } = useCart();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -28,28 +28,23 @@ const Checkout = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Construct WhatsApp Message
     let message = `*NUEVO PEDIDO - MB MEAURIO*\n\n`;
     message += `*Cliente:* ${formData.name}\n`;
     message += `*Teléfono:* ${formData.phone}\n`;
     message += `*Ciudad:* ${formData.city}\n`;
     message += `*Dirección:* ${formData.address}\n`;
     if (formData.notes) message += `*Notas:* ${formData.notes}\n`;
-    
+
     message += `\n*DETALLE DEL PEDIDO:*\n`;
     items.forEach((item) => {
       message += `- ${item.name} (x${item.quantity}): $${(item.price * item.quantity).toLocaleString()}\n`;
     });
-    
+
     message += `\n*TOTAL: $${total.toLocaleString()}*`;
 
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${siteConfig.phone}?text=${encodedMessage}`;
 
-    // Clear cart (optional, depending on UX preference)
-    // clearCart(); 
-
-    // Redirect to WhatsApp
     window.open(whatsappUrl, '_blank');
   };
 
@@ -72,8 +67,8 @@ const Checkout = () => {
         </Link>
 
         <div className="grid lg:grid-cols-2 gap-12">
-          {/* Order Summary */}
-          <motion.div 
+
+          <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
           >
@@ -104,8 +99,7 @@ const Checkout = () => {
             </Card>
           </motion.div>
 
-          {/* Checkout Form */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
@@ -118,23 +112,23 @@ const Checkout = () => {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="space-y-2">
                     <Label htmlFor="name" className="text-zinc-400">Nombre Completo</Label>
-                    <Input 
-                      id="name" 
-                      name="name" 
-                      required 
+                    <Input
+                      id="name"
+                      name="name"
+                      required
                       className="bg-black border-white/10 focus:border-red-600 text-white"
                       value={formData.name}
                       onChange={handleInputChange}
                     />
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label htmlFor="phone" className="text-zinc-400">Teléfono / WhatsApp</Label>
-                    <Input 
-                      id="phone" 
-                      name="phone" 
+                    <Input
+                      id="phone"
+                      name="phone"
                       type="tel"
-                      required 
+                      required
                       className="bg-black border-white/10 focus:border-red-600 text-white"
                       value={formData.phone}
                       onChange={handleInputChange}
@@ -144,10 +138,10 @@ const Checkout = () => {
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="city" className="text-zinc-400">Ciudad</Label>
-                      <Input 
-                        id="city" 
-                        name="city" 
-                        required 
+                      <Input
+                        id="city"
+                        name="city"
+                        required
                         className="bg-black border-white/10 focus:border-red-600 text-white"
                         value={formData.city}
                         onChange={handleInputChange}
@@ -155,10 +149,10 @@ const Checkout = () => {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="address" className="text-zinc-400">Dirección</Label>
-                      <Input 
-                        id="address" 
-                        name="address" 
-                        required 
+                      <Input
+                        id="address"
+                        name="address"
+                        required
                         className="bg-black border-white/10 focus:border-red-600 text-white"
                         value={formData.address}
                         onChange={handleInputChange}
@@ -168,9 +162,9 @@ const Checkout = () => {
 
                   <div className="space-y-2">
                     <Label htmlFor="notes" className="text-zinc-400">Notas Adicionales (Opcional)</Label>
-                    <Textarea 
-                      id="notes" 
-                      name="notes" 
+                    <Textarea
+                      id="notes"
+                      name="notes"
                       className="bg-black border-white/10 focus:border-red-600 text-white min-h-[100px]"
                       value={formData.notes}
                       onChange={handleInputChange}

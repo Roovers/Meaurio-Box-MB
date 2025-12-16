@@ -17,7 +17,7 @@ const Home = () => {
 
   return (
     <div className="flex flex-col">
-      {/* Hero Section */}
+
       <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
         <motion.div
           className="absolute inset-0 bg-cover bg-center"
@@ -62,11 +62,11 @@ const Home = () => {
                 </Button>
               </Link>
 
-<Link to="/about">
-  <Button
-    variant="outline"
-    size="lg"
-    className="
+              <Link to="/about">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="
       bg-transparent
       border-[#E6C768]/50
       text-[#FFD97A]
@@ -76,17 +76,16 @@ const Home = () => {
       text-lg font-bold tracking-wider
       transition-all
     "
-  >
-    LA MARCA
-  </Button>
-</Link>
+                >
+                  LA MARCA
+                </Button>
+              </Link>
 
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Features */}
       <section className="py-24 bg-black border-y border-white/5">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
@@ -128,7 +127,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Featured Products */}
       <section className="py-24 bg-zinc-950">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-end mb-12">
@@ -155,7 +153,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-black" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#C9A24D]/10 via-transparent to-[#B08D2F]/10" />

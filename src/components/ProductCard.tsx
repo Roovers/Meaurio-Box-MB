@@ -1,5 +1,3 @@
-// src/components/ProductCard.tsx
-
 import { useMemo, useState } from 'react'
 import type { Product } from '@/lib/data'
 import { useCart } from '@/context/CartContext'
@@ -11,15 +9,11 @@ interface ProductCardProps {
   product: Product
 }
 
-/* ================== ESTILOS MB ================== */
-
 const goldText =
   'text-transparent bg-clip-text bg-gradient-to-r from-[#C9A24D] via-[#FFD97A] to-[#B08D2F]'
 
 const goldButton =
   'bg-gradient-to-r from-[#C9A24D] via-[#FFD97A] to-[#B08D2F] hover:from-[#B08D2F] hover:via-[#FFD97A] hover:to-[#C9A24D] text-[#2B1B00] shadow-lg hover:shadow-xl border border-[#E6C768] transition-all duration-300'
-
-/* ================== TABLAS DE TALLES ================== */
 
 const SizeTableBoots = () => (
   <div className="overflow-x-auto">
@@ -87,8 +81,6 @@ const SizeTableClothes = () => (
   </div>
 )
 
-/* ================== COMPONENTE ================== */
-
 const ProductCard = ({ product }: ProductCardProps) => {
   const { addToCart } = useCart()
 
@@ -104,7 +96,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <>
-      {/* ================= CARD ================= */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -127,8 +118,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
                   key={i}
                   onClick={() => setActiveIndex(i)}
                   className={`h-2 w-2 rounded-full ${i === activeIndex
-                      ? 'bg-[#FFD97A]'
-                      : 'bg-white/40 hover:bg-[#FFD97A]/70'
+                    ? 'bg-[#FFD97A]'
+                    : 'bg-white/40 hover:bg-[#FFD97A]/70'
                     }`}
                 />
               ))}
@@ -169,7 +160,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </div>
       </motion.div>
 
-      {/* ================= MODAL ================= */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -190,7 +180,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
               transition={{ type: 'spring', stiffness: 120, damping: 18 }}
               className="relative w-full md:max-w-5xl bg-zinc-950 border border-white/10 rounded-t-2xl md:rounded-2xl max-h-[90vh] overflow-y-auto"
             >
-              {/* HEADER */}
+
               <div className="sticky top-0 z-10 bg-zinc-950 border-b border-white/10 p-4 md:p-6 flex justify-between">
                 <div>
                   <h3 className={`text-xl md:text-2xl font-black italic uppercase ${goldText}`}>
@@ -209,9 +199,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
                 </button>
               </div>
 
-              {/* CONTENIDO */}
               <div className="p-4 md:p-6 grid grid-cols-1 md:grid-cols-[1.2fr_0.8fr] gap-6">
-                {/* PRODUCTO */}
+
                 <div className="flex flex-col gap-4">
                   <div
                     className="
@@ -260,7 +249,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
                   </div>
                 </div>
 
-                {/* TALLES */}
                 <div className="bg-black/30 rounded-xl border border-white/10 p-4 h-fit">
                   <h4 className={`font-black uppercase italic mb-3 ${goldText}`}>
                     Guía de talles

@@ -19,7 +19,7 @@ const Footer = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
 
-            {/* LOGO + DESCRIPCIÓN */}
+
             <div className="-mt-8">
               <img
                 src={logo}
@@ -33,7 +33,6 @@ const Footer = () => {
               </p>
             </div>
 
-            {/* ENLACES */}
             <div>
               <h4 className="text-gold font-bold tracking-widest mb-6 text-sm uppercase">
                 Enlaces
@@ -67,50 +66,48 @@ const Footer = () => {
               </ul>
             </div>
 
-{/* CONTACTO */}
-<div>
-  <h4 className="text-gold font-bold tracking-widest mb-6 text-sm uppercase">
-    Contacto
-  </h4>
+            <div>
+              <h4 className="text-gold font-bold tracking-widest mb-6 text-sm uppercase">
+                Contacto
+              </h4>
 
-  <div className="space-y-4 text-sm text-zinc-400">
-    <p>Buenos Aires, Argentina</p>
+              <div className="space-y-4 text-sm text-zinc-400">
+                <p>Buenos Aires, Argentina</p>
 
-    <div className="flex items-center space-x-5">
-      <a
-        href="https://www.instagram.com/calzado_box_meaurio/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-zinc-400 hover:text-[#FFD97A] transition-all hover:scale-110"
-        aria-label="Instagram"
-      >
-        <Instagram className="w-5 h-5" />
-      </a>
+                <div className="flex items-center space-x-5">
+                  <a
+                    href="https://www.instagram.com/calzado_box_meaurio/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-zinc-400 hover:text-[#FFD97A] transition-all hover:scale-110"
+                    aria-label="Instagram"
+                  >
+                    <Instagram className="w-5 h-5" />
+                  </a>
 
-      <a
-        href="https://wa.me/5491139501590"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-zinc-400 hover:text-[#FFD97A] transition-all hover:scale-110"
-        aria-label="WhatsApp"
-      >
-        <FaWhatsapp className="w-5 h-5" />
-      </a>
+                  <a
+                    href="https://wa.me/5491139501590"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-zinc-400 hover:text-[#FFD97A] transition-all hover:scale-110"
+                    aria-label="WhatsApp"
+                  >
+                    <FaWhatsapp className="w-5 h-5" />
+                  </a>
 
-      <a
-        href="mailto:brunoemeaurio1997@gmail.com"
-        className="text-zinc-400 hover:text-[#FFD97A] transition-all hover:scale-110"
-        aria-label="Correo"
-      >
-        <Mail className="w-5 h-5" />
-      </a>
-    </div>
-  </div>
-</div>
+                  <a
+                    href="mailto:brunoemeaurio1997@gmail.com"
+                    className="text-zinc-400 hover:text-[#FFD97A] transition-all hover:scale-110"
+                    aria-label="Correo"
+                  >
+                    <Mail className="w-5 h-5" />
+                  </a>
+                </div>
+              </div>
+            </div>
 
           </div>
 
-          {/* FOOTER BOTTOM */}
           <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-zinc-600">
             <p>
               &copy; {new Date().getFullYear()} Meaurio Box.
@@ -123,7 +120,6 @@ const Footer = () => {
         </div>
       </footer>
 
-      {/* MODAL */}
       {modal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4">
           <div className="relative bg-zinc-950 border border-white/10 rounded-xl max-w-lg w-full p-6 text-zinc-300">

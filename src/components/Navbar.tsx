@@ -49,7 +49,7 @@ const Navbar = () => {
         }`}
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
-        {/* Logo */}
+
         <Link to="/" className="flex items-center">
           <img
             src={logo}
@@ -58,7 +58,6 @@ const Navbar = () => {
           />
         </Link>
 
-        {/* Desktop Nav */}
         <div className="hidden md:flex items-center space-x-8">
           {navLinks.map((link) => (
             <Link
@@ -75,9 +74,8 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* Right Actions */}
         <div className="flex items-center gap-4">
-          {/* Contact Icons */}
+
           <div className="flex items-center gap-3">
             <a
               href={contactLinks.email}
@@ -109,11 +107,8 @@ const Navbar = () => {
 
           </div>
 
-          {/* Divider */}
           <span className="hidden md:block w-px h-5 bg-[#E6C768]/40" />
 
-
-          {/* Cart */}
           <Sheet>
             <SheetTrigger asChild>
               <Button
@@ -136,7 +131,6 @@ const Navbar = () => {
             </SheetContent>
           </Sheet>
 
-          {/* Mobile Menu */}
           <button
             className="md:hidden text-white"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -148,7 +142,6 @@ const Navbar = () => {
 
       </div>
 
-      {/* Mobile Nav */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div

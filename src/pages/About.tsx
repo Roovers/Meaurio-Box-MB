@@ -18,7 +18,7 @@ const About = () => {
           </div>
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            {/* Texto */}
+
             <div className="space-y-6 text-zinc-300 leading-relaxed">
               <p className="text-lg font-medium text-white">
                 MB Meaurio nació de una necesidad real en el ring.
@@ -36,7 +36,7 @@ const About = () => {
               </p>
             </div>
 
-            {/* Imagen Bruno */}
+
             <div className="relative aspect-square rounded-lg overflow-hidden border border-white/5 group">
               <img
                 src={brunoImage}
@@ -44,10 +44,10 @@ const About = () => {
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
 
-              {/* Overlay */}
+
               <div className="absolute inset-0 bg-gradient-to-tr from-black/40 via-transparent to-red-900/20"></div>
 
-              {/* Nombre */}
+
               <div className="absolute bottom-4 left-4 z-10">
                 <span
                   className="
@@ -69,7 +69,7 @@ const About = () => {
             </div>
           </div>
 
-          {/* Filosofía */}
+
           <div className="bg-zinc-900/30 p-8 rounded-2xl border border-[#E6C768]/10 mt-12">
             <h2
               className="
@@ -83,7 +83,7 @@ const About = () => {
             </h2>
 
             <div className="grid md:grid-cols-3 gap-8">
-              {/* PRECISIÓN */}
+
               <div>
                 <h3
                   className="
@@ -100,7 +100,7 @@ const About = () => {
                 </p>
               </div>
 
-              {/* ADAPTABILIDAD */}
+
               <div>
                 <h3
                   className="
@@ -118,7 +118,7 @@ const About = () => {
                 </p>
               </div>
 
-              {/* PASIÓN */}
+
               <div>
                 <h3
                   className="
