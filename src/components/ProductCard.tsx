@@ -61,8 +61,8 @@ const SizeTableClothes = () => (
       <thead className="bg-zinc-900">
         <tr className="text-[#FFD97A]">
           <th className="p-2 border border-white/10">Talle</th>
-          <th className="p-2 border border-white/10">A (cm)</th>
-          <th className="p-2 border border-white/10">B (cm)</th>
+          <th className="p-2 border border-white/10">Pecho (cm)</th>
+          <th className="p-2 border border-white/10">Hombo a Cintura (cm)</th>
         </tr>
       </thead>
       <tbody className="text-white">
