@@ -8,9 +8,6 @@ import {
   Instagram
 } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
-import { FaShoppingCart } from 'react-icons/fa'
-
-
 import { useCart } from '@/context/CartContext';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
