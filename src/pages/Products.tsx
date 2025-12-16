@@ -9,13 +9,16 @@ const Products = () => {
     <div className="py-12 bg-black min-h-screen">
       <div className="container mx-auto px-4">
         <div className="mb-12 text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-6xl font-black text-white italic uppercase mb-4"
-          >
-            PRODUCTOS
-          </motion.h1>
+<motion.h1
+  initial={{ opacity: 0, y: -20 }}
+  animate={{ opacity: 1, y: 0 }}
+  className="text-4xl md:text-6xl font-black italic uppercase mb-4
+             text-transparent bg-clip-text bg-gradient-to-r
+             from-[#C9A24D] via-[#FFD97A] to-[#B08D2F]"
+>
+  PRODUCTOS
+</motion.h1>
+
           <p className="text-zinc-400 max-w-2xl mx-auto">
             Botas, remeras y musculosas Meaurio Box.
           </p>
