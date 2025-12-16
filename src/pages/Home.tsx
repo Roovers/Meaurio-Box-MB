@@ -153,25 +153,62 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-black" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#C9A24D]/10 via-transparent to-[#B08D2F]/10" />
+      <section className="relative py-28 bg-[#111111] overflow-hidden">
 
-        <div className="container mx-auto px-4 relative z-10 text-center">
-          <h2 className={`text-4xl md:text-6xl font-black italic uppercase mb-10 ${goldText}`}>
-            ¿LISTO PARA SUBIR DE NIVEL?
-          </h2>
+        <div className="absolute inset-0 bg-black/50 backdrop-blur-xl pointer-events-none" />
 
-          <Link to="/products">
-            <Button
-              size="lg"
-              className={`${goldButton} px-10 py-8 text-xl font-black tracking-wider`}
-            >
-              COMPRAR AHORA
-            </Button>
-          </Link>
+        <div className="absolute -top-40 -left-40 w-[700px] h-[700px] rounded-full bg-[#C9A24D]/10 blur-[200px]" />
+        <div className="absolute -bottom-40 -right-40 w-[700px] h-[700px] rounded-full bg-[#FFD97A]/5 blur-[200px]" />
+
+        <div className="relative z-10 container mx-auto px-8">
+
+          <div className="text-center mb-20">
+            <span className="block text-xs tracking-[0.35em] uppercase text-[#FFD97A]/50 mb-4">
+              Feed de Instagram
+            </span>
+
+            <h2 className={`text-3xl md:text-4xl font-black italic uppercase mb-2 ${goldText}`}>
+              Último en Instagram
+            </h2>
+
+            <div className="mt-6 mx-auto w-32 h-[2px] bg-gradient-to-r from-transparent via-[#FFD97A]/60 to-transparent" />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
+            {['C0-DJUELIR-', 'DSVGFLrjaOj', 'DRuaQiegGOj', 'DGjt4hGN9rF'].map((id, index) => (
+              <div
+                key={index}
+                className="relative overflow-hidden group rounded-2xl shadow-2xl transition-transform duration-700 ease-out
+                     hover:scale-105 hover:shadow-[0_40px_90px_-30px_rgba(0,0,0,0.5)]"
+              >
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500
+                          bg-gradient-to-t from-[#C9A24D]/20 via-transparent to-transparent" />
+
+                <iframe
+                  src={`https://www.instagram.com/p/${id}/embed`}
+                  className="relative z-10 w-full aspect-[9/16] rounded-xl border-2 border-[#333] shadow-lg"
+                  frameBorder="0"
+                  scrolling="no"
+                  allowTransparency
+                />
+
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent
+                         px-8 py-6 backdrop-blur-md rounded-b-xl">
+                  <a
+                    href={`https://www.instagram.com/p/${id}/`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block text-white font-semibold text-lg hover:text-[#FFD97A] transition-colors"
+                  >
+                    Ver publicación
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
+
     </div>
   )
 }
