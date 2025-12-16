@@ -1,3 +1,5 @@
+// src/pages/Products.tsx
+
 import { products } from '@/lib/data';
 import ProductCard from '@/components/ProductCard';
 import { motion } from 'framer-motion';
@@ -7,15 +9,15 @@ const Products = () => {
     <div className="py-12 bg-black min-h-screen">
       <div className="container mx-auto px-4">
         <div className="mb-12 text-center">
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-6xl font-black text-white italic uppercase mb-4"
           >
-            COLECCIÓN ELITE
+            PRODUCTOS
           </motion.h1>
           <p className="text-zinc-400 max-w-2xl mx-auto">
-            Descubre nuestra gama completa de calzado profesional. Cada par está diseñado para ofrecer el máximo rendimiento en el cuadrilátero.
+            Botas, remeras y musculosas Meaurio Box.
           </p>
         </div>
 
@@ -25,7 +27,7 @@ const Products = () => {
               key={product.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: index * 0.05 }}
             >
               <ProductCard product={product} />
             </motion.div>
