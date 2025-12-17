@@ -67,7 +67,7 @@ const Checkout = () => {
       }
     })
 
-    message += `\nTOTAL: $${total.toLocaleString('es-AR')}\n\n`
+    message += `\nTOTAL: $${total.toLocaleString('es-AR')}\n`
     message += `Metodo de pago: Acordar con el vendedor\n`
     message += `Forma de entrega: Acordar con el vendedor\n`
 
@@ -94,24 +94,22 @@ const Checkout = () => {
   }
 
   return (
-    <div className="py-12 bg-black min-h-screen">
+    <div className="py-10 md:py-12 bg-black min-h-screen">
       <div className="container mx-auto px-4 max-w-6xl">
         <Link
           to="/products"
-          className="inline-flex items-center text-zinc-400 hover:text-white mb-8 transition-colors"
+          className="inline-flex items-center text-zinc-400 hover:text-white mb-6 md:mb-8 transition-colors"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Volver a comprar
         </Link>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-          >
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          {/* RESUMEN */}
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
             <Card className="bg-zinc-900 border-white/10 text-white">
               <CardHeader>
-                <CardTitle className="text-xl font-bold uppercase tracking-wider">
+                <CardTitle className="text-lg md:text-xl font-bold uppercase tracking-wider">
                   Resumen del Pedido
                 </CardTitle>
               </CardHeader>
@@ -119,31 +117,19 @@ const Checkout = () => {
                 {items.map(item => (
                   <div
                     key={`${item.id}-${item.selectedColor}-${item.selectedSize}`}
-                    className="flex gap-4 py-2 border-b border-white/5 last:border-0"
+                    className="flex gap-4 py-3 border-b border-white/5 last:border-0"
                   >
-                    <div className="h-16 w-16 bg-zinc-800 rounded overflow-hidden">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="h-full w-full object-cover"
-                      />
+                    <div className="h-16 w-16 bg-zinc-800 rounded overflow-hidden shrink-0">
+                      <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
                     </div>
                     <div className="flex-1">
                       <h4 className="font-bold text-sm">{item.name}</h4>
-                      <p className="text-xs text-zinc-400">
-                        Color: {item.selectedColor}
-                      </p>
-                      <p className="text-xs text-zinc-400">
-                        Talle: {item.selectedSize}
-                      </p>
+                      <p className="text-xs text-zinc-400">Color: {item.selectedColor}</p>
+                      <p className="text-xs text-zinc-400">Talle: {item.selectedSize}</p>
                       {item.selectedVelcro && (
-                        <p className="text-xs text-zinc-400">
-                          Abrojos: {item.selectedVelcro}
-                        </p>
+                        <p className="text-xs text-zinc-400">Abrojos: {item.selectedVelcro}</p>
                       )}
-                      <p className="text-xs text-zinc-400">
-                        Cantidad: {item.quantity}
-                      </p>
+                      <p className="text-xs text-zinc-400">Cantidad: {item.quantity}</p>
                     </div>
                     <div className="text-right">
                       <p className="font-bold text-sm">
@@ -154,118 +140,66 @@ const Checkout = () => {
                 ))}
 
                 <div className="pt-4 mt-4 border-t border-white/10 flex justify-between items-center">
-                  <span className="text-lg font-bold">TOTAL</span>
-                  <span className="text-2xl font-bold text-red-500">
+                  <span className="text-base md:text-lg font-bold">TOTAL</span>
+                  <span className="text-xl md:text-2xl font-bold text-red-500">
                     ${total.toLocaleString('es-AR')}
                   </span>
                 </div>
 
-                <div className="mt-6 rounded-xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 to-transparent p-5">
-                  <p className="text-sm font-semibold text-amber-400 tracking-wide uppercase mb-2">
+                <div className="mt-5 rounded-xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 to-transparent p-4 md:p-5">
+                  <p className="text-xs font-semibold text-amber-400 uppercase mb-2">
                     Importante
                   </p>
-
                   <p className="text-sm text-zinc-200 leading-relaxed">
                     El método de pago y la forma de entrega se coordinan directamente
                     con el vendedor una vez enviado el pedido.
                   </p>
                 </div>
-
               </CardContent>
             </Card>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-          >
+          {/* FORM */}
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
             <Card className="bg-zinc-900 border-white/10 text-white">
               <CardHeader>
-                <CardTitle className="text-xl font-bold uppercase tracking-wider">
+                <CardTitle className="text-lg md:text-xl font-bold uppercase tracking-wider">
                   Datos de Envio
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-2 gap-4">
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <Label className="text-zinc-400">Nombre *</Label>
-                      <Input
-                        name="nombre"
-                        required
-                        className="bg-black border-white/10 text-white"
-                        value={formData.nombre}
-                        onChange={handleChange}
-                      />
+                      <Input name="nombre" required className="bg-black border-white/10 text-white" value={formData.nombre} onChange={handleChange} />
                     </div>
                     <div>
                       <Label className="text-zinc-400">Apellido *</Label>
-                      <Input
-                        name="apellido"
-                        required
-                        className="bg-black border-white/10 text-white"
-                        value={formData.apellido}
-                        onChange={handleChange}
-                      />
+                      <Input name="apellido" required className="bg-black border-white/10 text-white" value={formData.apellido} onChange={handleChange} />
                     </div>
                   </div>
 
                   <div>
-                    <Label className="text-zinc-400">
-                      Telefono de contacto *
-                    </Label>
-                    <Input
-                      name="telefono"
-                      required
-                      className="bg-black border-white/10 text-white"
-                      value={formData.telefono}
-                      onChange={handleChange}
-                    />
+                    <Label className="text-zinc-400">Telefono de contacto *</Label>
+                    <Input name="telefono" required className="bg-black border-white/10 text-white" value={formData.telefono} onChange={handleChange} />
                   </div>
 
-                  <div className="grid grid-cols-3 gap-4">
-                    <Input
-                      name="provincia"
-                      placeholder="Provincia *"
-                      required
-                      className="bg-black border-white/10 text-white"
-                      value={formData.provincia}
-                      onChange={handleChange}
-                    />
-                    <Input
-                      name="localidad"
-                      placeholder="Localidad *"
-                      required
-                      className="bg-black border-white/10 text-white"
-                      value={formData.localidad}
-                      onChange={handleChange}
-                    />
-                    <Input
-                      name="codigoPostal"
-                      placeholder="Codigo Postal *"
-                      required
-                      className="bg-black border-white/10 text-white"
-                      value={formData.codigoPostal}
-                      onChange={handleChange}
-                    />
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <Input name="provincia" placeholder="Provincia *" required className="bg-black border-white/10 text-white" value={formData.provincia} onChange={handleChange} />
+                    <Input name="localidad" placeholder="Localidad *" required className="bg-black border-white/10 text-white" value={formData.localidad} onChange={handleChange} />
+                    <Input name="codigoPostal" placeholder="Codigo Postal *" required className="bg-black border-white/10 text-white" value={formData.codigoPostal} onChange={handleChange} />
                   </div>
 
-                  <Textarea
-                    name="aclaraciones"
-                    placeholder="Aclaraciones (opcional)"
-                    className="bg-black border-white/10 text-white min-h-[100px]"
-                    value={formData.aclaraciones}
-                    onChange={handleChange}
-                  />
+                  <Textarea name="aclaraciones" placeholder="Aclaraciones (opcional)" className="bg-black border-white/10 text-white min-h-[90px]" value={formData.aclaraciones} onChange={handleChange} />
 
-                  <div className="mt-5 rounded-xl border border-[#E6C768]/30 bg-gradient-to-br from-black via-zinc-950 to-black p-5">
-                    <p className="text-xs uppercase tracking-[0.2em] text-[#FFD97A] mb-4">
+                  <div className="rounded-xl border border-[#E6C768]/30 bg-gradient-to-br from-black via-zinc-950 to-black p-4">
+                    <p className="text-xs uppercase tracking-[0.2em] text-[#FFD97A] mb-3">
                       Condiciones del pedido
                     </p>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="rounded-lg border border-[#E6C768]/20 bg-black/40 p-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div className="rounded-lg border border-[#E6C768]/20 bg-black/40 p-3">
                         <p className="text-[11px] uppercase tracking-widest text-zinc-400 mb-1">
                           Método de pago
                         </p>
@@ -274,7 +208,7 @@ const Checkout = () => {
                         </p>
                       </div>
 
-                      <div className="rounded-lg border border-[#E6C768]/20 bg-black/40 p-4">
+                      <div className="rounded-lg border border-[#E6C768]/20 bg-black/40 p-3">
                         <p className="text-[11px] uppercase tracking-widest text-zinc-400 mb-1">
                           Forma de entrega
                         </p>
@@ -285,11 +219,7 @@ const Checkout = () => {
                     </div>
                   </div>
 
-
-                  <Button
-                    type="submit"
-                    className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-6 text-lg"
-                  >
+                  <Button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-5 text-base md:text-lg">
                     <MessageCircle className="mr-2 h-5 w-5" />
                     ENVIAR PEDIDO POR WHATSAPP
                   </Button>
