@@ -1,100 +1,176 @@
-import { useState } from 'react';
-import { useCart } from '@/context/CartContext';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { siteConfig } from '@/lib/data';
-import { motion } from 'framer-motion';
-import { MessageCircle, ArrowLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react'
+import { useCart } from '@/context/CartContext'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { siteConfig } from '@/lib/data'
+import { motion } from 'framer-motion'
+import { MessageCircle, ArrowLeft } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const Checkout = () => {
-  const { items, total } = useCart();
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    city: '',
-    address: '',
-    notes: '',
-  });
+  const { items, total } = useCart()
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  const [formData, setFormData] = useState({
+    nombre: '',
+    apellido: '',
+    telefono: '',
+    provincia: '',
+    localidad: '',
+    codigoPostal: '',
+    aclaraciones: '',
+  })
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    let message = `*NUEVO PEDIDO - MB MEAURIO*\n\n`;
-    message += `*Cliente:* ${formData.name}\n`;
-    message += `*Teléfono:* ${formData.phone}\n`;
-    message += `*Ciudad:* ${formData.city}\n`;
-    message += `*Dirección:* ${formData.address}\n`;
-    if (formData.notes) message += `*Notas:* ${formData.notes}\n`;
+    let message = `NUEVO PEDIDO - MB MEAURIO\n\n`
 
-    message += `\n*DETALLE DEL PEDIDO:*\n`;
-    items.forEach((item) => {
-      message += `- ${item.name} (x${item.quantity}): $${(item.price * item.quantity).toLocaleString()}\n`;
-    });
+    message += `CLIENTE\n`
+    message += `Nombre: ${formData.nombre}\n`
+    message += `Apellido: ${formData.apellido}\n`
+    message += `Telefono: ${formData.telefono}\n\n`
 
-    message += `\n*TOTAL: $${total.toLocaleString()}*`;
+    message += `DIRECCION\n`
+    message += `Provincia: ${formData.provincia}\n`
+    message += `Localidad: ${formData.localidad}\n`
+    message += `Codigo Postal: ${formData.codigoPostal}\n`
+    if (formData.aclaraciones) {
+      message += `Aclaraciones: ${formData.aclaraciones}\n`
+    }
 
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${siteConfig.phone}?text=${encodedMessage}`;
+    message += `\nDETALLE DEL PEDIDO\n`
 
-    window.open(whatsappUrl, '_blank');
-  };
+    items.forEach((item, index) => {
+      message += `\n${index + 1}. ${item.name}\n`
+      message += `Color: ${item.selectedColor}\n`
+      message += `Talle: ${item.selectedSize}\n`
+      if (item.selectedVelcro) {
+        message += `Abrojos: ${item.selectedVelcro}\n`
+      }
+      message += `Cantidad: ${item.quantity}\n`
+      message += `Subtotal: $${(
+        item.price * item.quantity
+      ).toLocaleString('es-AR')}\n`
+
+      if (item.instagramUrl) {
+        message += `Ver modelo: ${item.instagramUrl}\n`
+      }
+    })
+
+    message += `\nTOTAL: $${total.toLocaleString('es-AR')}\n\n`
+    message += `Metodo de pago: Acordar con el vendedor\n`
+    message += `Forma de entrega: Acordar con el vendedor\n`
+
+    const whatsappUrl = `https://wa.me/${siteConfig.phone}?text=${encodeURIComponent(
+      message
+    )}`
+
+    window.open(whatsappUrl, '_blank')
+  }
 
   if (items.length === 0) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
-        <h2 className="text-2xl font-bold text-white mb-4">Tu carrito está vacío</h2>
+        <h2 className="text-2xl font-bold text-white mb-4">
+          Tu carrito esta vacio
+        </h2>
         <Link to="/products">
-          <Button className="bg-red-600 hover:bg-red-700">Explorar Productos</Button>
+          <Button className="bg-red-600 hover:bg-red-700">
+            Explorar Productos
+          </Button>
         </Link>
       </div>
-    );
+    )
   }
 
   return (
     <div className="py-12 bg-black min-h-screen">
       <div className="container mx-auto px-4 max-w-6xl">
-        <Link to="/products" className="inline-flex items-center text-zinc-400 hover:text-white mb-8 transition-colors">
-          <ArrowLeft className="w-4 h-4 mr-2" /> Volver a comprar
+        <Link
+          to="/products"
+          className="inline-flex items-center text-zinc-400 hover:text-white mb-8 transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Volver a comprar
         </Link>
 
         <div className="grid lg:grid-cols-2 gap-12">
-
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
           >
             <Card className="bg-zinc-900 border-white/10 text-white">
               <CardHeader>
-                <CardTitle className="text-xl font-bold uppercase tracking-wider">Resumen del Pedido</CardTitle>
+                <CardTitle className="text-xl font-bold uppercase tracking-wider">
+                  Resumen del Pedido
+                </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                {items.map((item) => (
-                  <div key={item.id} className="flex gap-4 py-2 border-b border-white/5 last:border-0">
+              <CardContent>
+                {items.map(item => (
+                  <div
+                    key={`${item.id}-${item.selectedColor}-${item.selectedSize}`}
+                    className="flex gap-4 py-2 border-b border-white/5 last:border-0"
+                  >
                     <div className="h-16 w-16 bg-zinc-800 rounded overflow-hidden">
-                      <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="h-full w-full object-cover"
+                      />
                     </div>
                     <div className="flex-1">
                       <h4 className="font-bold text-sm">{item.name}</h4>
-                      <p className="text-xs text-zinc-400">Cant: {item.quantity}</p>
+                      <p className="text-xs text-zinc-400">
+                        Color: {item.selectedColor}
+                      </p>
+                      <p className="text-xs text-zinc-400">
+                        Talle: {item.selectedSize}
+                      </p>
+                      {item.selectedVelcro && (
+                        <p className="text-xs text-zinc-400">
+                          Abrojos: {item.selectedVelcro}
+                        </p>
+                      )}
+                      <p className="text-xs text-zinc-400">
+                        Cantidad: {item.quantity}
+                      </p>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold text-sm">${(item.price * item.quantity).toLocaleString()}</p>
+                      <p className="font-bold text-sm">
+                        ${(item.price * item.quantity).toLocaleString('es-AR')}
+                      </p>
                     </div>
                   </div>
                 ))}
+
                 <div className="pt-4 mt-4 border-t border-white/10 flex justify-between items-center">
                   <span className="text-lg font-bold">TOTAL</span>
-                  <span className="text-2xl font-bold text-red-500">${total.toLocaleString()}</span>
+                  <span className="text-2xl font-bold text-red-500">
+                    ${total.toLocaleString('es-AR')}
+                  </span>
                 </div>
+
+                <div className="mt-6 rounded-xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 to-transparent p-5">
+                  <p className="text-sm font-semibold text-amber-400 tracking-wide uppercase mb-2">
+                    Importante
+                  </p>
+
+                  <p className="text-sm text-zinc-200 leading-relaxed">
+                    El método de pago y la forma de entrega se coordinan directamente
+                    con el vendedor una vez enviado el pedido.
+                  </p>
+                </div>
+
               </CardContent>
             </Card>
           </motion.div>
@@ -106,77 +182,117 @@ const Checkout = () => {
           >
             <Card className="bg-zinc-900 border-white/10 text-white">
               <CardHeader>
-                <CardTitle className="text-xl font-bold uppercase tracking-wider">Datos de Envío</CardTitle>
+                <CardTitle className="text-xl font-bold uppercase tracking-wider">
+                  Datos de Envio
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="name" className="text-zinc-400">Nombre Completo</Label>
-                    <Input
-                      id="name"
-                      name="name"
-                      required
-                      className="bg-black border-white/10 focus:border-red-600 text-white"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="phone" className="text-zinc-400">Teléfono / WhatsApp</Label>
-                    <Input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      required
-                      className="bg-black border-white/10 focus:border-red-600 text-white"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="city" className="text-zinc-400">Ciudad</Label>
+                    <div>
+                      <Label className="text-zinc-400">Nombre *</Label>
                       <Input
-                        id="city"
-                        name="city"
+                        name="nombre"
                         required
-                        className="bg-black border-white/10 focus:border-red-600 text-white"
-                        value={formData.city}
-                        onChange={handleInputChange}
+                        className="bg-black border-white/10 text-white"
+                        value={formData.nombre}
+                        onChange={handleChange}
                       />
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="address" className="text-zinc-400">Dirección</Label>
+                    <div>
+                      <Label className="text-zinc-400">Apellido *</Label>
                       <Input
-                        id="address"
-                        name="address"
+                        name="apellido"
                         required
-                        className="bg-black border-white/10 focus:border-red-600 text-white"
-                        value={formData.address}
-                        onChange={handleInputChange}
+                        className="bg-black border-white/10 text-white"
+                        value={formData.apellido}
+                        onChange={handleChange}
                       />
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="notes" className="text-zinc-400">Notas Adicionales (Opcional)</Label>
-                    <Textarea
-                      id="notes"
-                      name="notes"
-                      className="bg-black border-white/10 focus:border-red-600 text-white min-h-[100px]"
-                      value={formData.notes}
-                      onChange={handleInputChange}
+                  <div>
+                    <Label className="text-zinc-400">
+                      Telefono de contacto *
+                    </Label>
+                    <Input
+                      name="telefono"
+                      required
+                      className="bg-black border-white/10 text-white"
+                      value={formData.telefono}
+                      onChange={handleChange}
                     />
                   </div>
 
-                  <Button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-6 text-lg tracking-wide">
-                    <MessageCircle className="mr-2 h-5 w-5" /> ENVIAR PEDIDO POR WHATSAPP
+                  <div className="grid grid-cols-3 gap-4">
+                    <Input
+                      name="provincia"
+                      placeholder="Provincia *"
+                      required
+                      className="bg-black border-white/10 text-white"
+                      value={formData.provincia}
+                      onChange={handleChange}
+                    />
+                    <Input
+                      name="localidad"
+                      placeholder="Localidad *"
+                      required
+                      className="bg-black border-white/10 text-white"
+                      value={formData.localidad}
+                      onChange={handleChange}
+                    />
+                    <Input
+                      name="codigoPostal"
+                      placeholder="Codigo Postal *"
+                      required
+                      className="bg-black border-white/10 text-white"
+                      value={formData.codigoPostal}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <Textarea
+                    name="aclaraciones"
+                    placeholder="Aclaraciones (opcional)"
+                    className="bg-black border-white/10 text-white min-h-[100px]"
+                    value={formData.aclaraciones}
+                    onChange={handleChange}
+                  />
+
+                  <div className="mt-5 rounded-xl border border-[#E6C768]/30 bg-gradient-to-br from-black via-zinc-950 to-black p-5">
+                    <p className="text-xs uppercase tracking-[0.2em] text-[#FFD97A] mb-4">
+                      Condiciones del pedido
+                    </p>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="rounded-lg border border-[#E6C768]/20 bg-black/40 p-4">
+                        <p className="text-[11px] uppercase tracking-widest text-zinc-400 mb-1">
+                          Método de pago
+                        </p>
+                        <p className="text-sm font-semibold text-[#FFD97A]">
+                          Acordar con el vendedor
+                        </p>
+                      </div>
+
+                      <div className="rounded-lg border border-[#E6C768]/20 bg-black/40 p-4">
+                        <p className="text-[11px] uppercase tracking-widest text-zinc-400 mb-1">
+                          Forma de entrega
+                        </p>
+                        <p className="text-sm font-semibold text-[#FFD97A]">
+                          Acordar con el vendedor
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <Button
+                    type="submit"
+                    className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-6 text-lg"
+                  >
+                    <MessageCircle className="mr-2 h-5 w-5" />
+                    ENVIAR PEDIDO POR WHATSAPP
                   </Button>
-                  <p className="text-xs text-center text-zinc-500 mt-4">
-                    Al hacer clic, se abrirá WhatsApp con los detalles de tu pedido listos para enviar.
-                  </p>
                 </form>
               </CardContent>
             </Card>
@@ -184,7 +300,7 @@ const Checkout = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Checkout;
+export default Checkout

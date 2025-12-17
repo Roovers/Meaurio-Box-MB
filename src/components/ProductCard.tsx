@@ -1,9 +1,11 @@
 import { useMemo, useState } from 'react'
-import type { Product } from '@/lib/data'
+import type { Product, VelcroOption } from '@/lib/data'
 import { useCart } from '@/context/CartContext'
 import { Button } from '@/components/ui/button'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Plus, X } from 'lucide-react'
+import type { CartItem } from '@/context/CartContext'
+
 
 interface ProductCardProps {
   product: Product
@@ -56,7 +58,7 @@ const SizeTableClothes = () => (
         <tr className="text-[#FFD97A]">
           <th className="p-2 border border-white/10">Talle</th>
           <th className="p-2 border border-white/10">Pecho (cm)</th>
-          <th className="p-2 border border-white/10">Hombo a Cintura (cm)</th>
+          <th className="p-2 border border-white/10">Hombro a Cintura (cm)</th>
         </tr>
       </thead>
       <tbody className="text-white">
@@ -84,15 +86,46 @@ const SizeTableClothes = () => (
 const ProductCard = ({ product }: ProductCardProps) => {
   const { addToCart } = useCart()
 
-  const images = useMemo(() => {
-    const arr = product.images?.length ? product.images : [product.image]
-    return arr.filter(Boolean)
-  }, [product.images, product.image])
-
-  const [activeIndex, setActiveIndex] = useState(0)
+  const [variantId, setVariantId] = useState(product.variants[0]?.id)
+  const [selectedSize, setSelectedSize] = useState('')
+  const [selectedVelcro, setSelectedVelcro] = useState<VelcroOption | ''>('')
   const [open, setOpen] = useState(false)
 
+  const selectedVariant =
+    product.variants.find(v => v.id === variantId) || product.variants[0]
+
+  const images = useMemo(() => {
+    const arr = selectedVariant?.images?.length
+      ? selectedVariant.images
+      : [selectedVariant?.image || product.image]
+    return arr.filter(Boolean)
+  }, [selectedVariant, product.image])
+
+  const [activeIndex, setActiveIndex] = useState(0)
   const activeImg = images[Math.min(activeIndex, images.length - 1)]
+
+  const canAdd =
+    selectedSize &&
+    (!product.velcroOptions || selectedVelcro)
+
+const handleAdd = () => {
+  if (!canAdd) return
+
+  const item: CartItem = {
+    ...product,
+    image: selectedVariant.image,
+    images: selectedVariant.images,
+    selectedColor: selectedVariant.label,
+    selectedSize,
+    selectedVelcro: selectedVelcro || undefined,
+    instagramUrl: selectedVariant.instagramUrl,
+    quantity: 1,
+  }
+
+  addToCart(item)
+}
+
+
 
   return (
     <>
@@ -108,7 +141,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
             alt={product.name}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-90 group-hover:opacity-100"
           />
-
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-60" />
 
           {images.length > 1 && (
@@ -117,10 +149,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
                 <button
                   key={i}
                   onClick={() => setActiveIndex(i)}
-                  className={`h-2 w-2 rounded-full ${i === activeIndex
-                    ? 'bg-[#FFD97A]'
-                    : 'bg-white/40 hover:bg-[#FFD97A]/70'
-                    }`}
+                  className={`h-2 w-2 rounded-full ${
+                    i === activeIndex
+                      ? 'bg-[#FFD97A]'
+                      : 'bg-white/40 hover:bg-[#FFD97A]/70'
+                  }`}
                 />
               ))}
             </div>
@@ -132,17 +165,69 @@ const ProductCard = ({ product }: ProductCardProps) => {
             {product.name}
           </h3>
 
-          <p className="text-zinc-400 text-sm mb-4 line-clamp-2 min-h-[40px]">
+          <p className="text-zinc-400 text-sm mb-3 line-clamp-2 min-h-[40px]">
             {product.description}
           </p>
 
-          <p className="text-xl font-black text-white">
+          <p className="text-xl font-black text-white mb-3">
             ${product.price.toLocaleString('es-AR')}
           </p>
 
+          {product.variants.length > 1 && (
+            <div className="mb-3 flex flex-wrap gap-2">
+              {product.variants.map(v => (
+                <button
+                  key={v.id}
+                  onClick={() => {
+                    setVariantId(v.id)
+                    setActiveIndex(0)
+                  }}
+                  className={`px-3 py-1 rounded-full text-xs border ${
+                    v.id === variantId
+                      ? 'border-[#FFD97A] text-[#FFD97A]'
+                      : 'border-white/10 text-zinc-400'
+                  }`}
+                >
+                  {v.label}
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div className="mb-3 grid grid-cols-2 gap-3">
+            <select
+              value={selectedSize}
+              onChange={e => setSelectedSize(e.target.value)}
+              className="w-full bg-black border border-white/10 text-white p-2 rounded"
+            >
+              <option value="">Talle</option>
+              {product.sizeOptions.map(size => (
+                <option key={size} value={size}>{size}</option>
+              ))}
+            </select>
+
+            {product.velcroOptions && (
+              <select
+                value={selectedVelcro}
+                onChange={e =>
+                  setSelectedVelcro(Number(e.target.value) as VelcroOption)
+                }
+                className="w-full bg-black border border-white/10 text-white p-2 rounded"
+              >
+                <option value="">Cant abrojos</option>
+                {product.velcroOptions.map(v => (
+                  <option key={v} value={v}>
+                    {v} abrojo{v === 2 ? 's' : ''}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+
           <div className="mt-4 grid grid-cols-2 gap-3">
             <Button
-              onClick={() => addToCart(product)}
+              onClick={handleAdd}
+              disabled={!canAdd}
               className={`${goldButton} font-black tracking-wider`}
             >
               <Plus className="w-4 h-4 mr-2" />
@@ -180,7 +265,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
               transition={{ type: 'spring', stiffness: 120, damping: 18 }}
               className="relative w-full md:max-w-5xl bg-zinc-950 border border-white/10 rounded-t-2xl md:rounded-2xl max-h-[90vh] overflow-y-auto"
             >
-
               <div className="sticky top-0 z-10 bg-zinc-950 border-b border-white/10 p-4 md:p-6 flex justify-between">
                 <div>
                   <h3 className={`text-xl md:text-2xl font-black italic uppercase ${goldText}`}>
@@ -200,29 +284,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
               </div>
 
               <div className="p-4 md:p-6 grid grid-cols-1 md:grid-cols-[1.2fr_0.8fr] gap-6">
-
                 <div className="flex flex-col gap-4">
-                  <div
-                    className="
-    bg-black/40
-    rounded-xl
-    border border-white/10
-    overflow-hidden
-    flex
-    items-center
-    justify-center
-    h-[220px]
-    md:h-[280px]
-  "
-                  >
+                  <div className="bg-black/40 rounded-xl border border-white/10 overflow-hidden flex items-center justify-center h-[220px] md:h-[280px]">
                     <img
                       src={activeImg}
                       alt={product.name}
-                      className="
-      h-full
-      w-full
-      object-cover
-    "
+                      className="h-full w-full object-cover"
                     />
                   </div>
 
@@ -238,14 +305,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
                         ))}
                       </ul>
                     )}
-
-                    <Button
-                      onClick={() => addToCart(product)}
-                      className={`${goldButton} w-full mt-4 font-black tracking-wider`}
-                    >
-                      <Plus className="w-4 h-4 mr-2" />
-                      AGREGAR AL CARRITO
-                    </Button>
                   </div>
                 </div>
 
